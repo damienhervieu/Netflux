@@ -38,3 +38,10 @@ Ouvrir un terminal et entrer les commandes suivantes:
 ```
 npm install --global npm
 ```
+
+
+## Installer le projet
+Pour installer proprement le projet et rétablir toutes les dépendances, ouvrez un terminal et entrez la commande suivante:
+```
+npm install
+```
