@@ -45,3 +45,9 @@ Pour installer proprement le projet et rétablir toutes les dépendances, ouvrez
 ```
 npm install
 ```
+
+## Déploiement du projet avec Yarn
+Pour vérifier les dépendances du projet et fonctionner avec les versions exactes du développement de l'application, ouvrez un terminal et entrez la commande suivante:
+```
+yarn install
+```
