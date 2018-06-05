@@ -54,3 +54,4 @@ Pour vérifier les dépendances du projet et fonctionner avec les versions exact
 yarn install
 yarn install --check-files
 ```
+
