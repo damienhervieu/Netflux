@@ -2,7 +2,7 @@
 Projet consistant à créer un système de vidéo à la demande sur la même lignée que Netflix, Amazon Prime etc.
 
 
-## Mise à jour de node et npm
+## Installation et mise à jour de Node.js et npm
 
 ## Node.js
 
@@ -39,19 +39,30 @@ Ouvrir un terminal et entrer les commandes suivantes:
 npm install --global npm
 ```
 
+## Yarn
+
+### Installer Yarn
+Ouvrir un invité de commande (Windows + R et tappez "cmd") et entrez la commande suivante:
+```
+npm install -g yarn
+```
+
+
 
 ## Installer le projet
 
-### Pour les utilisateurs de npm
+### Lancer une installation npm
 Pour installer proprement le projet et rétablir toutes les dépendances, ouvrez un terminal et entrez la commande suivante:
 ```
 npm install
+cd client
+npm install
+cd ../
 ```
 
-### Pour les utilisateurs de Yarn (fortement recommandé)
+### Ensuite, lancer une installation yarn
 Pour vérifier les dépendances du projet et fonctionner avec les versions exactes du développement de l'application, ouvrez un terminal et entrez la commande suivante:
 ```
 yarn install
 yarn install --check-files
 ```
-
