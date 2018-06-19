@@ -1,0 +1,22 @@
+{
+  "name": "Netflux",
+  "version": "0.1.0",
+  "description": "VoD app made with React.js and Express with the example of Netflix and Amazon Prime",
+  "private": true,
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "express": "~4.16.0",
+    "nodemon": "^1.17.4",
+    "yarn": "^1.6.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  },
+  "scripts": {
+    "client": "cd ../client && yarn start",
+    "server": "nodemon app.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  }
+}

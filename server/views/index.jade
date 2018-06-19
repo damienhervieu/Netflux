@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1= TEST DE MES BALLS
+  p Welcome to #{title}
+  video(id="videoPlayer", controls="true")
+  	source(src="http://localhost:3000/video", type="video/mkv")
