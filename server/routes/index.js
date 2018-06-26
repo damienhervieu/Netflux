@@ -1,23 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var user = require('./user.js')
 const fs = require('fs');
 const path = require('path');
 
 /* GET home page. */
 
-router.get('/', function(req, res) {
-  var message = '';
-  res.render('index', {message: message});
-});
+router.get('/login', user.login);
 
-router.get('/register', function(req, res){
-  var message = '';
-  res.render('register', {message: message});
-});
+router.get('/register', user.register);
 
-router.post('/register', function (req, res){
-  console.log("A user tried to connect");
-});
+router.post('/login', user.login);
+
+router.post('/register', user.register);
 
 router.get('/video', function(req, res) {
   const path = 'C:/Users/falle/Videos/Dr.Disrespect - Gillette (The Best A Man Can Get) By 199X [LINK IN DESC].mp4'

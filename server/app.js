@@ -25,7 +25,7 @@ var connection = mysql.createConnection({
     }
   });
 
-  global.db = connection;
+global.db = connection;
 
 var session = require('express-session');
 app.use(session({

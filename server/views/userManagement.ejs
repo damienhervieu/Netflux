@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Netflux | User Management</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    
+</head>
+<body>
+        <table class="table table-bordered table-responsive">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Permission</th>
+                    <th>User's logs</th>
+                    <th>Modify</th>
+                    <th>Reset Password</th>
+                    <th>Delete</th>
+                </tr>
+                <% for(i=1; i < results.length; i++){ %>
+                    <tr>
+                        <td><% results[i].id_user %></td>
+                        <td><% results[i].first_name + " " + results[i].last_name %></td>
+                        <td><% results[i].email %></td>
+                        <td><% results[i].permission %></td></td>
+                        <td><a href=<% "/manage-users/modify/" + results[i].id_user %>></a>>Modify</a></td>
+                        <td><a href=<% "/manage-users/delete/" + results[i].id_user %>>Delete</a></td>
+                    </tr>
+                <% } %>
+            </table>
+</body>
