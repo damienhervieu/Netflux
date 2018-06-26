@@ -34,7 +34,7 @@ sudo n latest
 ## NPM
 
 ### Mettre à jour npm
-Ouvrir un terminal et entrer les commandes suivantes:
+Ouvrir un terminal et entrer la commande suivantes:
 ```
 npm install --global npm
 ```
@@ -42,7 +42,7 @@ npm install --global npm
 ## Yarn
 
 ### Installer Yarn
-Ouvrir un invité de commande (Windows + R et tappez "cmd") et entrez la commande suivante:
+Ouvrir un terminal et entrez la commande suivante:
 ```
 npm install -g yarn
 ```

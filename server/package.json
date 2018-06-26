@@ -4,12 +4,17 @@
   "description": "VoD app made with React.js and Express with the example of Netflix and Amazon Prime",
   "private": true,
   "dependencies": {
-    "eslint": "^4.19.1",
-    "express": "~4.16.0",
-    "nodemon": "^1.17.4",
-    "yarn": "^1.6.0",
+    "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "ejs": "^2.6.1",
+    "eslint": "^4.19.1",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.17.4",
+    "req-flash": "0.0.3",
+    "yarn": "^1.6.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
