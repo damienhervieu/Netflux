@@ -1,51 +1,63 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+const express = require('express');
+// const session = require('express-session');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const mysql = require('mysql');
+const user = require('./routes/user');
+const index = require('./routes/index');
 
-var app = express();
+const app = express();
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'd_netflux'
-  });
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'd_netflux',
+});
 
-  connection.connect(function(err){
-    if(!err) {
-        console.log("Database is connected");
-    } else {
-        console.log("Error connecting database");
-    }
-  });
+connection.connect();
 
 global.db = connection;
-
-var session = require('express-session');
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 60000 }
-}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+/* app.use(session({
+  secret: 'netflux_user',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 },
+})); */
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get('/', index.home);
 
-module.exports = app;
+app.get('/login', user.login);
+
+app.post('/login', user.login);
+
+app.get('/logout', user.logout);
+
+app.get('/register', user.register);
+
+app.post('/register', user.register);
+
+app.get('/user-management', user.userManagement);
+
+app.get('/user-management/modify/:id', user.modifyUser);
+
+app.post('/user-management/modify/:id', user.modifyUser);
+
+app.get('/user-management/delete/:id', user.deleteUser);
+
+app.post('/user-management/delete/:id', user.deleteUser);
+
+app.get('/video', index.video);
+
+app.listen(3000);
