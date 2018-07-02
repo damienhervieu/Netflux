@@ -129,18 +129,14 @@ exports.modifyUser = (req, res) => {
 exports.deleteUser = (req, res) => {
   const userId = req.params.id;
   if (req.method === 'POST') {
-    if (req.body.delete === 'yes') {
-      connection.query('DELETE FROM t_users WHERE ?', userId, (error) => {
-        if (error) {
-          const message = ('An error occured during the deletion : ', error);
-          res.render('delete', { message });
-        } else {
-          res.redirect('/user-management');
-        }
-      });
-    } else if (req.body.delete === 'no') {
-      res.redirect('/user-management');
-    }
+    connection.query('DELETE FROM t_users WHERE `id` =  ?', userId, (error) => {
+      if (error) {
+        const message = ('An error occured during the deletion : ', error);
+        res.render('delete', { message });
+      } else {
+        res.redirect('/user-management');
+      }
+    });
   } else {
     connection.query('SELECT * FROM t_users WHERE id_user = ?', userId, (error, results) => {
       if (error) {

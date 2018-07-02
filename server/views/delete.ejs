@@ -38,16 +38,13 @@
         <h2 class="text-center">Do you really want to delete the account of <%= results[0].email %> ?</h2>
         <hr class="separator">
         <div class="form-wrap text-center">
-            <form class="form-inline" method="POST"></form>
+            <form class="form-inline" method="POST">
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-4">
-                        <input type="radio" name="delete" id="yes" value="yes"/>
-                        <label for="yes">Yes</label>
-                        <input type="radio" name="delete" id="no" value="no"/>
-                        <label for="no">No</label>
+                        <button type="submit" class="btn btn-primary" name="delete">Yes</button>
+                        <a href="/user-management"><button class="btn btn-primary" name="delete" id="no">No</button></a>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Delete this user</button>
             </form>
         </div>
     </div>
