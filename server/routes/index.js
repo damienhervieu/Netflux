@@ -1,7 +1,19 @@
 const fs = require('fs');
+const session = require('express-session');
+
+session({
+  secret: 'netflux user',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 },
+});
 
 exports.home = (req, res) => {
-  res.render('home');
+  if (session.connected === true) {
+    res.render('home');
+  } else {
+    res.redirect('/login');
+  }
 };
 
 exports.video = (req, res) => {

@@ -1,4 +1,13 @@
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+
+session({
+  secret: 'netflux user',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 },
+});
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -13,20 +22,25 @@ exports.login = (req, res) => {
     const user = {
       email: req.body.email,
     };
-    const [password] = [req.body.password];
     connection.query('SELECT * FROM t_users WHERE ?', user, (error, results) => {
-      console.log(results);
       if (error) {
-        res.redirect('/login', { message });
-      } else if (results.length > 0 && results[0].password === password) {
-        message = 'Aw yeah! Welcome back!';
-        /* [req.session.userId] = [results[0].id_user];
-        [req.session.permission] = [results[0].permission];
-        [req.session.user] = [results[0]]; */
-        res.redirect('/');
+        throw error;
+      } else if (results.length > 0) {
+        bcrypt.compare(req.body.password, results[0].password, (err, confirm) => {
+          if (confirm) {
+            session.connected = true;
+            session.user_id = results[0].id_user;
+            session.permission = results[0].permission;
+            res.redirect('/');
+          } else {
+            message = 'Invalid credentials were provided';
+            res.render('login', { message });
+          }
+        });
+      } else {
+        message = 'Email not found';
+        res.render('login', { message });
       }
-      message = 'Email not found';
-      res.render('login', { message });
     });
   } else {
     res.render('login', { message });
@@ -36,19 +50,9 @@ exports.login = (req, res) => {
 exports.register = (req, res) => {
   if (req.method === 'POST') {
     const today = new Date();
-    const [password] = [req.body.password];
-    const [passwordConfirm] = [req.body.passwordConfirm];
+    const { password } = req.body.password;
+    const { passwordConfirm } = req.body.passwordConfirm;
 
-
-    const users = {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-      permission: 1,
-      created_at: today,
-      changed_at: today,
-    };
     if (password !== passwordConfirm) {
       const message = 'Please enter the same password';
       res.render('register', { message });
@@ -56,22 +60,38 @@ exports.register = (req, res) => {
       const message = 'Please enter the same email and password in the allocated fields';
       res.render('register', { message });
     } else {
-      connection.query('INSERT INTO t_users SET ?', users, (error) => {
-        if (error) {
-          res.redirect('/register');
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if (err) {
+          console.log(err);
+          res.render('register');
         } else {
-          const message = 'Your account has been created!';
-          res.redirect('/login', { message });
+          const users = {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            password: hash,
+            permission: 1,
+            created_at: today,
+            changed_at: today,
+          };
+          connection.query('INSERT INTO t_users SET ?', users, (error) => {
+            if (error) {
+              throw error;
+            } else {
+              res.redirect('/login');
+            }
+          });
         }
       });
     }
   } else {
-    res.render('register');
+    const message = '';
+    res.render('register', { message });
   }
 };
 
 exports.logout = (req, res) => {
-  req.session.destroy((err) => {
+  session.destroy((err) => {
     if (err) {
       res.redirect('/');
     } else {
@@ -80,20 +100,45 @@ exports.logout = (req, res) => {
   });
 };
 
+exports.upload = (req, res) => {
+  if (session.permission === 2) {
+    if (req.method === 'POST') {
+      const media = {
+        title: req.body.title,
+        author: req.body.author,
+        category: req.body.category,
+        thumbnail: `./public/thumbnails/${req.body.title}`,
+        video: `./public/videos/${req.body.videos}`,
+        uploader_id: session.user_id,
+      };
+      connection.query('INSERT INTO TABLE t_medias ?', media, (error, results) => {
+        if (error) {
+          throw error;
+        } else {
+          res.redirect('/');
+        }
+      });
+    } else {
+      res.render('upload');
+    }
+  } else {
+    res.redirect('/');
+  }
+};
+
 exports.userManagement = (req, res) => {
-  // if (req.session.permission === 2) {
-    // const [permission] = req.session.permission;
+  if (session.permission === 2) {
     connection.query('SELECT * FROM t_users', (error, results) => {
       res.render('userManagement', { results });
     });
-  /* } else {
+  } else {
     res.redirect('/');
-  } */
+  }
 };
 
 exports.modifyUser = (req, res) => {
   const userId = req.params.id;
-  //if (req.session.permission === 2) {
+  if (session.permission === 2) {
     if (req.method === 'POST') {
       const [permission] = [req.body.permission];
       const modifiedUser = [
@@ -121,30 +166,34 @@ exports.modifyUser = (req, res) => {
         }
       });
     }
-  /* } else {
+  } else {
     res.redirect('/');
-  } */
+  }
 };
 
 exports.deleteUser = (req, res) => {
   const userId = req.params.id;
-  if (req.method === 'POST') {
-    connection.query('DELETE FROM t_users WHERE `id` =  ?', userId, (error) => {
-      if (error) {
-        const message = ('An error occured during the deletion : ', error);
-        res.render('delete', { message });
-      } else {
-        res.redirect('/user-management');
-      }
-    });
+  if (session.permission === 2) {
+    if (req.method === 'POST') {
+      connection.query('DELETE FROM t_users WHERE id_user =  ?', userId, (error) => {
+        if (error) {
+          const message = ('An error occured during the deletion : ', error);
+          res.render('delete', { message });
+        } else {
+          res.redirect('/user-management');
+        }
+      });
+    } else {
+      connection.query('SELECT * FROM t_users WHERE id_user = ?', userId, (error, results) => {
+        if (error) {
+          const message = ('An error occured during the selection : ', error);
+          res.render('user-management', { message });
+        } else {
+          res.render('delete', { results });
+        }
+      });
+    }
   } else {
-    connection.query('SELECT * FROM t_users WHERE id_user = ?', userId, (error, results) => {
-      if (error) {
-        const message = ('An error occured during the selection : ', error);
-        res.render('user-management', { message });
-      } else {
-        res.render('delete', { results });
-      }
-    });
+    res.redirect('/');
   }
 };

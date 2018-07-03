@@ -4,8 +4,10 @@
   "description": "VoD app made with React.js and Express with the example of Netflix and Amazon Prime",
   "private": true,
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
@@ -17,10 +19,6 @@
     "yarn": "^1.6.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "concurrently": "^3.5.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",

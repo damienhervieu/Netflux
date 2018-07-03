@@ -1,25 +1,13 @@
 const express = require('express');
-// const session = require('express-session');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-const mysql = require('mysql');
 const user = require('./routes/user');
 const index = require('./routes/index');
 
 const app = express();
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'd_netflux',
-});
-
-connection.connect();
-
-global.db = connection;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,12 +17,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-/* app.use(session({
-  secret: 'netflux_user',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 60000 },
-})); */
+app.use(cors(process.env.ORIGIN, { withCredentials: true }));
 
 app.get('/', index.home);
 
@@ -43,6 +26,10 @@ app.get('/login', user.login);
 app.post('/login', user.login);
 
 app.get('/logout', user.logout);
+
+app.get('/upload', user.upload);
+
+app.post('/upload', user.upload);
 
 app.get('/register', user.register);
 
