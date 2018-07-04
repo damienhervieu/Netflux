@@ -69,7 +69,7 @@ class FormRegister extends Component {
       <Form onSubmit={this.handleSubmit}>
         <FormItem
           {...formItemLayout}
-          label="FirstName"
+          label="Prénom"
         >
           <Input
             name="firstname"
@@ -78,7 +78,7 @@ class FormRegister extends Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="LastName"
+          label="Nom"
         >
           <Input
             name="lastname"
@@ -96,11 +96,11 @@ class FormRegister extends Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Password"
+          label="Mot de passe"
         >
           {getFieldDecorator('password', {
             rules: [{
-              required: true, message: 'Please input your password!',
+              required: true, message: 'Merci d\'entrer un mot de passe!',
             }, {
               validator: this.validateToNextPassword,
             }],
@@ -112,11 +112,11 @@ class FormRegister extends Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Confirm Password"
+          label="Confirmation"
         >
           {getFieldDecorator('confirm', {
             rules: [{
-              required: true, message: 'Please confirm your password!',
+              required: true, message: 'Merci de confirmer le mot de passe!',
             }, {
               validator: this.compareToFirstPassword,
             }],
@@ -129,7 +129,7 @@ class FormRegister extends Component {
         </FormItem>
         <FormItem {...tailFormItemLayout}>
           <Checkbox>
-            I have read the <a href="">agreement</a>
+            J{'\''}ai lu le <a href="">règlement</a>
           </Checkbox>
         </FormItem>
       </Form>

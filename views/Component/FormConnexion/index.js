@@ -12,7 +12,7 @@ class FormConnexion extends Component {
         <FormItem>
           <Input
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="Username"
+            placeholder="E-mail"
             name="username"
             onChange={this.props.handleChange}
           />
@@ -21,7 +21,7 @@ class FormConnexion extends Component {
           <Input
             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
             type="password"
-            placeholder="Password"
+            placeholder="Mot de passe"
             name="password"
             onChange={this.props.handleChange}
           />
@@ -30,10 +30,11 @@ class FormConnexion extends Component {
           {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
-          })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="">Forgot password  </a>
-           or
-          <a href="">  register now!</a>
+          })(<Checkbox>Se souvenir de moi</Checkbox>)}
+          <br />
+          <a className="login-form-forgot" href="">Mot de passe oublié </a>
+           ou
+          <a href="">  s{'\''}enregistrer maintenant!</a>
         </FormItem>
       </Form>
     );

@@ -9,7 +9,9 @@ class Home extends Component {
 
   render() {
     return (
-      <h1> Page daccueil </h1>
+      <div className="divHomePage"style={{ background: '#fff', padding: 24 }}>
+        <h1> Page d{'\''}accueil </h1>
+      </div>
     );
   }
 }

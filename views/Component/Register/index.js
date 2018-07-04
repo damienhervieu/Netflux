@@ -103,11 +103,13 @@ class Register extends Component {
     const { visible, confirmLoading } = this.state;
     return (
       <div>
-        <Button type="primary" onClick={this.showModalRegister}>Senregistrer</Button>
+        <Button type="primary" onClick={this.showModalRegister}>S{'\''}enregistrer</Button>
         <Modal
           title="Enregistrement"
           visible={visible}
           onOk={this.handleSubmit}
+          okText="S'enregistrer"
+          cancelText="Retour"
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
         >

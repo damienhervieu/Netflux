@@ -82,6 +82,7 @@ class Connexion extends Component {
           visible={visible}
           onOk={this.handleSubmit}
           okText="Connexion"
+          cancelText="Retour"
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
         >
