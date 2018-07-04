@@ -83,6 +83,7 @@ yarn server
 ```
 
 /!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux /!\
+
 Pour lancer le projet, ouvrez un terminal et entrez la commande suivante:
 
 ```
@@ -97,9 +98,13 @@ yarn dev
 
 #### Identification
 Une fois la partie serveur lancée, ouvrez votre navigateur à l'adresse http://localhost:3000/login ou http://localhost:3000
+
 Le serveur possède un utilisateur de type administrateur par défaut avec les identifiants : 
+
 user: root@root.com
+
 password: root
+
 Toutefois vous pouvez créer un nouveau compte en cliquant sur "Sign Up Here".
 
 #### Manage Users
@@ -109,9 +114,13 @@ Le bouton Modify renvoie sur un formulaire pour modifier l'utilisateur choisi.
 #### Télécharger une vidéo sur le serveur
 L'onglet Upload a video permet de télécharger une video sur le serveur et de rentrer ces informations dans la base de données pour pouvoir être accesible depuis le site.
 L'onglet Upload vous renvoie sur un formulaire à remplir comprenant un titre, un author, une categorie à sélectionner parmi une liste et deux fichiers à choisir. La thumbnail doit être une image sous format .jpg, .png ou .jpeg tandis que la vidéo n'accepte que des vidéos sous format .mp4.
+
 Une fois ces éléments renseigné, appuyer sur le bouton go! et vous serez redirigé vers la page home
+
 Le fichier thumbnail sera enregistré dans ./server/ressources/thumbnail.
+
 Le fichier vidéo sera enregistré dans ./server/ressources/video.
+
 De plus un champ sera renseigné dans la table média qui comprendra tout ces éléments ainsi que le chemin absolue des différents fichiers.
 
 ### Partie React
