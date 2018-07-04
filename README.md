@@ -82,7 +82,7 @@ Pour lancer la partie serveur, ouvrez un terminal et entrez la commande suivante
 yarn server
 ```
 
-__/!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux /!\ __
+__/!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux__
 
 Pour lancer le projet, ouvrez un terminal et entrez la commande suivante:
 
@@ -90,7 +90,7 @@ Pour lancer le projet, ouvrez un terminal et entrez la commande suivante:
 yarn dev
 ```
 
-__/!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux /!\ __
+__/!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux__
 
 ## Mode d'emploi
 
