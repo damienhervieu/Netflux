@@ -1,6 +1,10 @@
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const formidable = require('formidable');
+const path = require('path');
+
+const uploadDir = path.join(__dirname, '/..', '/ressources/');
 
 session({
   secret: 'netflux user',
@@ -26,7 +30,7 @@ exports.login = (req, res) => {
       if (error) {
         throw error;
       } else if (results.length > 0) {
-        bcrypt.compare(req.body.password, results[0].password, (err, confirm) => {
+        bcrypt.compare(req.body.password, results[0].password, (_err, confirm) => {
           if (confirm) {
             session.connected = true;
             session.user_id = results[0].id_user;
@@ -62,8 +66,8 @@ exports.register = (req, res) => {
     } else {
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
-          console.log(err);
           res.render('register');
+          throw err;
         } else {
           const users = {
             first_name: req.body.first_name,
@@ -90,7 +94,7 @@ exports.register = (req, res) => {
   }
 };
 
-exports.logout = (req, res) => {
+exports.logout = (_req, res) => {
   session.destroy((err) => {
     if (err) {
       res.redirect('/');
@@ -103,32 +107,48 @@ exports.logout = (req, res) => {
 exports.upload = (req, res) => {
   if (session.permission === 2) {
     if (req.method === 'POST') {
-      const media = {
-        title: req.body.title,
-        author: req.body.author,
-        category: req.body.category,
-        thumbnail: `./public/thumbnails/${req.body.title}`,
-        video: `./public/videos/${req.body.videos}`,
-        uploader_id: session.user_id,
-      };
-      connection.query('INSERT INTO TABLE t_medias ?', media, (error, results) => {
-        if (error) {
-          throw error;
-        } else {
-          res.redirect('/');
-        }
+      const form = new formidable.IncomingForm();
+      form.multiples = true;
+      form.keepExtensions = true;
+      form.uploadDir = uploadDir;
+      form.maxFieldsSize *= 1024; // 20 GB max
+      form.parse(req, (err, fields, files) => {
+        if (err) return res.status(500).json({ error: err });
+        // res.status(200).json({ uploaded: true });
+        const media = {
+          title: fields.title,
+          category: fields.category,
+          thumbnail: files.thumbnail.path,
+          video: files.video.path,
+          author: fields.author,
+        };
+        connection.query('INSERT INTO t_media SET ?', media, (error) => {
+          if (error) {
+            throw error;
+          }
+        });
+      });
+      form.on('fileBegin', (_name, file) => {
+        const [fileName, fileExt] = file.name.split('.');
+        if (fileExt === 'mp4') file.path = path.join(uploadDir, '/video/', `${fileName}_${new Date().getTime()}.${fileExt}`);
+        else file.path = path.join(uploadDir, '/thumbnail/', `${fileName}_${new Date().getTime()}.${fileExt}`);
+      });
+      form.on('end', () => {
+        res.redirect('/');
       });
     } else {
-      res.render('upload');
+      connection.query('SELECT * FROM t_category', (_error, results) => {
+        res.render('upload', { results });
+      });
     }
   } else {
     res.redirect('/');
   }
 };
 
-exports.userManagement = (req, res) => {
+exports.userManagement = (_req, res) => {
   if (session.permission === 2) {
-    connection.query('SELECT * FROM t_users', (error, results) => {
+    connection.query('SELECT * FROM t_users', (_error, results) => {
       res.render('userManagement', { results });
     });
   } else {
@@ -150,7 +170,7 @@ exports.modifyUser = (req, res) => {
       ];
       connection.query('UPDATE t_users SET `first_name` = ?, `last_name` = ?, `email` = ?, `permission` = ? WHERE `id_user` = ?', modifiedUser, (error) => {
         if (error) {
-          console.log(error);
+          throw error;
         } else {
           res.redirect('/user-management');
         }

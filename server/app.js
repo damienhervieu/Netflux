@@ -6,8 +6,10 @@ const cors = require('cors');
 
 const user = require('./routes/user');
 const index = require('./routes/index');
+const main = require('./routes/main');
 
 const app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +22,8 @@ app.use(cookieParser());
 app.use(cors(process.env.ORIGIN, { withCredentials: true }));
 
 app.get('/', index.home);
+
+app.get('/test', main.test);
 
 app.get('/login', user.login);
 

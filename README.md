@@ -55,9 +55,6 @@ npm install -g yarn
 Pour installer proprement le projet et rétablir toutes les dépendances, ouvrez un terminal et entrez la commande suivante:
 ```
 npm install
-cd client
-npm install
-cd ../
 ```
 
 ### Ensuite, lancer une installation yarn
@@ -66,3 +63,36 @@ Pour vérifier les dépendances du projet et fonctionner avec les versions exact
 yarn install
 yarn install --check-files
 ```
+
+### Créer la base de données
+Pour utiliser cette application, une base de données mysql doit être accesible depuis le serveur, la bdd doit se nommer d_netflux. Si vous voulez le nommer différemment, remplacez 'd_netflux' dans les fichier ./server/routes/user.js et ./server/routes/main.js par le nom voulu.
+
+Ensuite éxécutez le fichier ./server/bdd/fichier d_netflux.sql dans votre base de données
+
+## Lancer le projet
+Pour lancer la partie React, ouvrez un terminal et entrez la commande suivante:
+
+```
+yarn client
+```
+
+Pour lancer la partie serveur, ouvrez un terminal et entrez la commande suivante:
+
+```
+yarn server
+```
+
+/!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux /!\
+Pour lancer le projet, ouvrez un terminal et entrez la commande suivante:
+
+```
+yarn dev
+```
+
+/!\ Cette partie n'est actuellement pas fonctionnel, cette commande lancera séparement le React et le serveur node mais sans aucun lien entre eux /!\
+
+## Mode d'emploi
+
+### Partie serveur
+    Connecte
+### Partie React
