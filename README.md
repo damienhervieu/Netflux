@@ -1,5 +1,5 @@
 # Netflux
-Projet consistant à créer un système de vidéo à la demande sur la même lignée que Netflix, Amazon Prime etc.
+Projet consistant à créer un système de vidéo à la demande sur la même lignée que Netflix, Amazon Video Prime etc.
 
 
 ## Installation et mise à jour de Node.js et npm
@@ -11,7 +11,7 @@ Se rendre sur le site de node à la page https://nodejs.org/en/download/, télé
 Suivre les instructions.
 Si l'installation se termine prématurément, empêcher l'installation d'EWT dans le premier menu déroulant.
 
-### Mettre à jour node.js sur Mac
+### Installer et mettre à jour node.js sur Mac
 Installer Homebrew (nécessaire dans un environnement de développement):
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -20,6 +20,7 @@ Installer Homebrew (nécessaire dans un environnement de développement):
 Procéder aux commandes ci dessous dans votre terminal:
 ```
 brew update
+brew install node
 brew upgrade node
 ```
 
@@ -34,7 +35,7 @@ sudo n latest
 ## NPM
 
 ### Mettre à jour npm
-Ouvrir un terminal et entrer la commande suivantes:
+Ouvrir un terminal et entrer la commande suivante:
 ```
 npm install --global npm
 ```
@@ -67,7 +68,7 @@ yarn install --check-files
 ### Créer la base de données
 Pour utiliser cette application, une base de données mysql doit être accesible depuis le serveur, la bdd doit se nommer d_netflux. Si vous voulez le nommer différemment, remplacez 'd_netflux' dans les fichier ./server/routes/user.js et ./server/routes/main.js par le nom voulu.
 
-Ensuite éxécutez le fichier ./server/bdd/fichier d_netflux.sql dans votre base de données
+Ensuite exécutez le fichier ./server/bdd/fichier d_netflux.sql dans votre base de données
 
 ## Lancer le projet
 Pour lancer la partie React, ouvrez un terminal et entrez la commande suivante:
@@ -124,3 +125,7 @@ Le fichier vidéo sera enregistré dans ./server/ressources/video.
 De plus un champ sera renseigné dans la table média qui comprendra tout ces éléments ainsi que le chemin absolue des différents fichiers.
 
 ### Partie React
+
+L'interface utilisateur fonctionne comme toutes celle qu'on peut trouver sur d'autres sites de ce genre.
+Un formulaire de connexion et d'inscription sont accessibles dans le menu.
+Une fois l'utilisateur identifié, il a accès au différentes catégories de film.
