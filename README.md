@@ -131,13 +131,13 @@ La route http://localhost:3000/video permet de visionner une video sur un lecteu
 Les routes sont concentrés dans le fichier app.js par soucis de lisibilité. Nous avons donc créé nos propres middleware gérant les routes dans les fichiers contenus dans les dossier routes. 
 Toutes les fonctions sollicitant la manipulation d'utilisateurs se trouvent dans le fichier user.js.
 Pour les requêtes menant à la homepage
-
+***
 Toutes les requêtes de page passées avec la méthode GET renvoient un template ejs propre à la page nécessaire. A l'exception de la méthode GET userManagement qui exécute une requête à la base de données pour récupérer tous les utilisateurs et pouvoir les afficher sur le template renvoyé.
-
+***
 La méthode POST de register vérifie les valeurs entrées dans les champs password et passwordConfirm. Lorsque les deux valeurs sont identiques, nous procédons au hashage du mot de passe utilisateur avec bcrypt afin de ne pas le stocker en clair sur la base de données. Une fois le mot de passe hashé, les informations de l'utilisateur sont entrées dans la base de données. Si les mots de passe ne sont pas identiques lorsque l'utilisateur entre ses informations dans le formulaire, il est redirigé vers le même formulaire avec un message d'erreur correspondant à l'erreur occasionnée.
-
+***
 La méthode POST de login effectue une verification des entrées utilisateur par rapport aux données entrées dans la BDD. Le mot de passe récupéré est déchiffrée par bcrypt et verifié avec la valeur du formulaire de connexion. Si les mots de passe concordent, l'utilisateur est redirigé vers la page d'accueil et une session ainsi que des variables de session lui sont attribuées. Il ne pourra pas retourner sur la page de connexion. Si les mots de passe ne correspondent pas ou que l'email n'apparait pas dans la BDD, il est amené à nouveau sur le formulaire de connexion lui indiquant quelle erreur a été commise.
-
+***
 Les méthodes POST de modify et delete fonctionnent presque de manière similaire, à l'exception que modify contient un formulaire pour changer les attributs d'un utilisateur alors que delete ne contient que deux bouton nécessaire à la confirmation de supression. Les deux méthodes récupèrent l'utilisateur en prenant l'id passé par la route (certes cela ne correspond pas à des conditions d'utilisation normales, mais nous avons opté pour la manière la plus rapide à nos yeux) par une requête SQL. La méthode modify récupère les champs du formulaire et les attribue dans un tableau que l'on passe à la requête pour procéder à l'UPDATE. Concernant la méthode delete on applique directement la requête SQL delete vu que le bouton "No" de la page redirige directement l'utilisateur à la page de management d'utilisateur.
 
 ### Partie React
